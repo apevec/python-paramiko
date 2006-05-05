@@ -4,7 +4,7 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.5.3
+Version:        1.5.4
 Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
@@ -54,5 +54,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/paramiko-%{version}-py%{pyver}.egg-info
 
 %changelog
+* Fri May 05 2006 Shahms E. King <shahms@shahms.com> 1.5.4-1
+- Update to new upstream version
+
 * Wed Apr 12 2006 Shahms E. King <shahms@shahms.com> 1.5.3-1
   - Initial package
