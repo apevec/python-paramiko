@@ -4,7 +4,7 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.6
+Version:        1.6.1
 Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
@@ -57,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %ghost %{python_sitelib}/paramiko/*.pyo
 
 %changelog
+* Tue Aug 08 2006 Shahms E. King <shahms@shahms.com> 1.6.1-1
+- Update to new upstream version
+
 * Fri Jun 02 2006 Shahms E. King <shahms@shahms.com> 1.6-1
 - Update to new upstream version
 - ghost the .pyo files
