@@ -5,7 +5,7 @@
 
 Name:           python-paramiko
 Version:        1.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -54,9 +54,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{python_sitelib}/paramiko
 %{python_sitelib}/paramiko/*.py
 %{python_sitelib}/paramiko/*.pyc
-%ghost %{python_sitelib}/paramiko/*.pyo
+%{python_sitelib}/paramiko/*.pyo
 
 %changelog
+* Fri Aug 11 2006 Shahms E. King <shahms@shahms.com> 1.6.1-2
+- Include, don't ghost .pyo files per new guidelines
+
 * Tue Aug 08 2006 Shahms E. King <shahms@shahms.com> 1.6.1-1
 - Update to new upstream version
 
