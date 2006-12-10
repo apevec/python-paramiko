@@ -4,14 +4,14 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.6.2
+Version:        1.6.4
 Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
 License:        LGPL
 URL:            http://www.lag.net/paramiko/
-Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.zip
+Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -57,6 +57,11 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/paramiko/*.pyo
 
 %changelog
+* Sat Dec 09 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 1.6.4-1
+- Update to 1.6.4
+- Upstream is now shipping tarballs
+- Bump for python 2.5 in devel
+
 * Mon Oct  9 2006 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2-1
 - Update to 1.6.2
 
