@@ -1,10 +1,9 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?pyver: %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.6.4
+Version:        1.7.1
 Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
@@ -17,7 +16,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools
-Requires:       python-abi = %{pyver}
 Requires:       python-crypto >= 1.9
 
 %description
@@ -37,26 +35,22 @@ encrypted tunnel. (This is how sftp works, for example.)
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT --single-version-externally-managed
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 
 %files
 %defattr(-,root,root,-)
 %doc LICENSE PKG-INFO README docs/
-%{python_sitelib}/paramiko-%{version}-py%{pyver}.egg-info
-%dir %{python_sitelib}/paramiko
-%{python_sitelib}/paramiko/*.py
-%{python_sitelib}/paramiko/*.pyc
-%{python_sitelib}/paramiko/*.pyo
+%{python_sitelib}/*
 
 %changelog
+* Thu Jul 19 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-1
+- Update to 1.7.1
+
 * Sat Dec 09 2006 Toshio Kuratomi <toshio@tiki-lounge.com> - 1.6.4-1
 - Update to 1.6.4
 - Upstream is now shipping tarballs
