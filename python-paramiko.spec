@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -48,6 +48,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Thu Jul 19 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-2
+- Bump rev
+
 * Thu Jul 19 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-1
 - Update to 1.7.1
 
