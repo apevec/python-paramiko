@@ -4,18 +4,24 @@
 
 Name:           python-paramiko
 Version:        1.7.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
 License:        LGPL
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
+Patch0:		paramiko-osrandompool-fixed.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
+
+%if 0%{?fedora} >= 8
+BuildRequires: python-setuptools-devel
+%else
+BuildRequires: python-setuptools
+%endif
+
 Requires:       python-crypto >= 1.9
 
 %description
@@ -30,14 +36,14 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
-
+%patch0 -p0
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+CFLAGS="$RPM_OPT_FLAGS" %{__python} -c 'import setuptools; execfile("setup.py")' build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT --single-version-externally-managed
+%{__python} -c 'import setuptools; execfile("setup.py")' install --skip-build --root %{buildroot}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -48,6 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Mon Jan 14 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-3
+- Update to latest Python packaging guidelines.
+- Apply patch that fixes insecure use of RandomPool.
+
 * Thu Jul 19 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-2
 - Bump rev
 
