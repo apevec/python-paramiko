@@ -3,15 +3,14 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.1
-Release:        3%{?dist}
+Version:        1.7.2
+Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
 License:        LGPL
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
-Patch0:		paramiko-osrandompool-fixed.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -36,7 +35,6 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p0
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} -c 'import setuptools; execfile("setup.py")' build
@@ -54,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Tue Jan 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.2-1
+- Update to 1.7.2.
+- Remove upstreamed patch.
+
 * Mon Jan 14 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.1-3
 - Update to latest Python packaging guidelines.
 - Apply patch that fixes insecure use of RandomPool.
