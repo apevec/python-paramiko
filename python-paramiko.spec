@@ -3,7 +3,7 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.2
+Version:        1.7.3
 Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
@@ -52,6 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Mon Mar 24 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.3-1
+- Update to 1.7.3.
+
 * Tue Jan 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.2-1
 - Update to 1.7.2.
 - Remove upstreamed patch.
