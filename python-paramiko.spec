@@ -4,11 +4,12 @@
 
 Name:           python-paramiko
 Version:        1.7.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
-License:        LGPL
+# No version specified.
+License:        LGPLv2+
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -52,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Wed Sep  3 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1.7.4-2
+- fix license tag
+
 * Sun Jul  6 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.4-1
 - Update to 1.7.4
 
