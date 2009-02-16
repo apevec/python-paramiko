@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -36,6 +36,8 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%{__chmod} a-x demos/*
+%{__sed} -i -e '/^#!/,1d' demos/* paramiko/rng*
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} -c 'import setuptools; execfile("setup.py")' build
@@ -49,10 +51,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE PKG-INFO README docs/
+%doc LICENSE PKG-INFO README docs/ demos/
 %{python_sitelib}/*
 
 %changelog
+* Mon Feb 16 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.4-4
+- Add demos as documentation. BZ#485742
+
 * Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 1.7.4-3
 - Rebuild for Python 2.6
 
