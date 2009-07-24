@@ -3,8 +3,8 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.4
-Release:        5%{?dist}
+Version:        1.7.5
+Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -55,6 +55,15 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Thu Jul 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.5-1
+- v1.7.5 (Ernest) 19jul09
+- -----------------------
+-  * added support for ARC4 cipher and CTR block chaining (Denis Bernard)
+-  * made transport threads daemonize, to fix python 2.6 atexit behavior
+-  * support unicode hostnames, and IP6 addresses (Maxime Ripard, Shikhar
+-    Bhushan)
+-  * various small bug fixes
+
 * Thu Feb 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.4-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
