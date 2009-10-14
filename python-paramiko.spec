@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -12,6 +12,7 @@ Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
+Patch0: 	paramiko-channel-race.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -36,6 +37,7 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%patch0 -p0 -b .race
 %{__chmod} a-x demos/*
 %{__sed} -i -e '/^#!/,1d' demos/* paramiko/rng*
 
@@ -55,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Tue Oct 13 2009 Jeremy Katz <katzj@fedoraproject.org> - 1.7.5-2
+- Fix race condition (#526341)
+
 * Thu Jul 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.5-1
 - v1.7.5 (Ernest) 19jul09
 - -----------------------
