@@ -3,8 +3,8 @@
 %define srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.5
-Release:        2%{?dist}
+Version:        1.7.6
+Release:        1%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -12,7 +12,6 @@ Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
-Patch0: 	paramiko-channel-race.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -37,7 +36,6 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p0 -b .race
 %{__chmod} a-x demos/*
 %{__sed} -i -e '/^#!/,1d' demos/* paramiko/rng*
 
@@ -57,6 +55,13 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Mon Nov  2 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.6-1
+- v1.7.6 (Fanny) 1nov09
+- ---------------------
+-  * fixed bugs 411099 (sftp chdir isn't unicode-safe), 363163 & 411910 (more
+-    IPv6 problems on windows), 413850 (race when server closes the channel),
+-    426925 (support port numbers in host keys)
+
 * Tue Oct 13 2009 Jeremy Katz <katzj@fedoraproject.org> - 1.7.5-2
 - Fix race condition (#526341)
 
