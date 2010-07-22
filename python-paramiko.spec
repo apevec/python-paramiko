@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -55,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 1.7.6-2
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Mon Nov  2 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.6-1
 - v1.7.6 (Fanny) 1nov09
 - ---------------------
