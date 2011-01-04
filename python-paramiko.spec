@@ -1,28 +1,26 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define srcname paramiko
+%global srcname paramiko
 
 Name:           python-paramiko
 Version:        1.7.6
-Release:        2%{?dist}
-Summary:        A SSH2 protocol library for python
+Release:        3%{?dist}
+Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
 # No version specified.
 License:        LGPLv2+
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
+# From: https://github.com/garyvdm/paramiko/commit/044e7029986a060552770feb1687b00862f1a6ba
+Patch0: 0001-Use-Crypto.Random-rather-than-Crypto.Util.RandomPool.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 
-%if 0%{?fedora} >= 8
-BuildRequires: python-setuptools-devel
-%else
 BuildRequires: python-setuptools
-%endif
-
-Requires:       python-crypto >= 1.9
+BuildRequires: python-crypto >= 1.9
+Requires:      python-crypto >= 1.9
 
 %description
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is
@@ -36,18 +34,23 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%patch0 -p1 -b .randpooldepr
+
 %{__chmod} a-x demos/*
 %{__sed} -i -e '/^#!/,1d' demos/* paramiko/rng*
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} -c 'import setuptools; execfile("setup.py")' build
+%{__python} setup.py build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%{__python} -c 'import setuptools; execfile("setup.py")' install --skip-build --root %{buildroot}
+rm -rf %{buildroot}
+%{__python} setup.py install --skip-build --root %{buildroot}
+
+%check
+python ./test.py
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
@@ -55,6 +58,11 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/*
 
 %changelog
+* Tue Jan 4 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 1.7.6-3
+- Patch to address deprecation warning from pycrypto
+- Simplify build as shown in new python guidelines
+- Enable test suite
+
 * Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 1.7.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
