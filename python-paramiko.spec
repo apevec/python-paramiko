@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.6
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.6-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Tue Jan 4 2011 Toshio Kuratomi <toshio@fedoraproject.org> - 1.7.6-3
 - Patch to address deprecation warning from pycrypto
 - Simplify build as shown in new python guidelines
