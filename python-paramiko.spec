@@ -3,8 +3,8 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.6
-Release:        4%{?dist}
+Version:        1.7.7.1
+Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -12,8 +12,7 @@ Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://www.lag.net/paramiko/
 Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
-# From: https://github.com/garyvdm/paramiko/commit/044e7029986a060552770feb1687b00862f1a6ba
-Patch0: 0001-Use-Crypto.Random-rather-than-Crypto.Util.RandomPool.patch
+Source1:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz.asc
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -34,10 +33,9 @@ encrypted tunnel. (This is how sftp works, for example.)
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p1 -b .randpooldepr
 
 %{__chmod} a-x demos/*
-%{__sed} -i -e '/^#!/,1d' demos/* paramiko/rng*
+%{__sed} -i -e '/^#!/,1d' demos/*
 
 %build
 %{__python} setup.py build
@@ -58,6 +56,22 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Wed Jul  6 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.7.1-1
+- v1.7.7.1 (George) 21may11
+- -------------------------
+-   * Make the verification phase of SFTP.put optional (Larry Wright)
+-   * Patches to fix AIX support (anonymous)
+-   * Patch from Michele Bertoldi to allow compression to be turned on in the
+-     client constructor.
+-   * Patch from Shad Sharma to raise an exception if the transport isn't active
+-     when you try to open a new channel.
+-   * Stop leaking file descriptors in the SSH agent (John Adams)
+-   * More fixes for Windows address family support (Andrew Bennetts)
+-   * Use Crypto.Random rather than Crypto.Util.RandomPool
+-     (Gary van der Merwe, #271791)
+-   * Support for openssl keys (tehfink)
+-   * Fix multi-process support by calling Random.atfork (sugarc0de)
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.6-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
