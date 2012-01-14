@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.7.7.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -56,6 +56,9 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.7.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Wed Jul  6 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.7.7.1-1
 - v1.7.7.1 (George) 21may11
 - -------------------------
