@@ -3,16 +3,15 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.7.7.1
-Release:        3%{?dist}
+Version:        1.9.0
+Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
 # No version specified.
 License:        LGPLv2+
-URL:            http://www.lag.net/paramiko/
-Source0:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz
-Source1:        http://www.lag.net/paramiko/download/%{srcname}-%{version}.tar.gz.asc
+URL:            https://github.com/paramiko/paramiko/
+Source0:        http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -56,6 +55,9 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Wed Jan  2 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.9.0-1
+- Update to 1.9.0
+
 * Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.7.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
