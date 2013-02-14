@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -55,6 +55,9 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Wed Jan  2 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.9.0-1
 - Update to 1.9.0
 
