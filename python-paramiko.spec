@@ -3,8 +3,8 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.10.1
-Release:        2%{?dist}
+Version:        1.11.0
+Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -55,6 +55,9 @@ rm -rf %{buildroot}
 %{python_sitelib}/*
 
 %changelog
+* Mon Oct 21 2013 Orion Poplawski <orion@cora.nwra.com> - 1.11.0-1
+- Update to 1.11.0
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.10.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
