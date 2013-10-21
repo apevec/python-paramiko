@@ -12,7 +12,6 @@ Group:          Development/Libraries
 License:        LGPLv2+
 URL:            https://github.com/paramiko/paramiko/
 Source0:        http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 
@@ -40,17 +39,12 @@ encrypted tunnel. (This is how sftp works, for example.)
 %{__python} setup.py build
 
 %install
-rm -rf %{buildroot}
 %{__python} setup.py install --skip-build --root %{buildroot}
 
 %check
 python ./test.py
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root,-)
 %doc LICENSE PKG-INFO README docs/ demos/
 %{python_sitelib}/*
 
