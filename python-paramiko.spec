@@ -3,7 +3,7 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.11.0
+Version:        1.11.3
 Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
@@ -49,6 +49,9 @@ python ./test.py
 %{python_sitelib}/*
 
 %changelog
+* Wed Jan 22 2014 Orion Poplawski <orion@cora.nwra.com> - 1.11.3-1
+- Update to 1.11.3
+
 * Mon Oct 21 2013 Orion Poplawski <orion@cora.nwra.com> - 1.11.0-1
 - Update to 1.11.0
 
