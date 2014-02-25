@@ -3,7 +3,7 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.11.3
+Version:        1.12.2
 Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
@@ -16,8 +16,10 @@ Source0:        http://pypi.python.org/packages/source/p/paramiko/paramiko-%{ver
 BuildArch:      noarch
 
 BuildRequires: python-setuptools
-BuildRequires: python-crypto >= 1.9
-Requires:      python-crypto >= 1.9
+BuildRequires: python-crypto >= 2.1
+BuildRequires: python-ecdsa
+Requires:      python-crypto >= 2.1
+Requires:      python-ecdsa
 
 %description
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is
@@ -49,6 +51,9 @@ python ./test.py
 %{python_sitelib}/*
 
 %changelog
+* Tue Feb 25 2014 Orion Poplawski <orion@cora.nwra.com> - 1.12.2-1
+- Update to 1.12.2
+
 * Wed Jan 22 2014 Orion Poplawski <orion@cora.nwra.com> - 1.11.3-1
 - Update to 1.11.3
 
