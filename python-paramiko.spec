@@ -4,7 +4,7 @@
 
 Name:           python-paramiko
 Version:        1.12.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -51,6 +51,9 @@ python ./test.py
 %{python_sitelib}/*
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.12.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Tue Feb 25 2014 Orion Poplawski <orion@cora.nwra.com> - 1.12.2-1
 - Update to 1.12.2
 
