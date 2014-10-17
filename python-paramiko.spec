@@ -3,7 +3,7 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.12.4
+Version:        1.15.1
 Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
@@ -44,13 +44,16 @@ encrypted tunnel. (This is how sftp works, for example.)
 %{__python} setup.py install --skip-build --root %{buildroot}
 
 %check
-python ./test.py
+%{__python} ./test.py --no-sftp --no-big-file
 
 %files
 %doc LICENSE PKG-INFO README docs/ demos/
 %{python_sitelib}/*
 
 %changelog
+* Fri Oct 17 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.15.1-1
+- Update to 1.15.1
+
 * Fri Jun 13 2014 Orion Poplawski <orion@cora.nwra.com> - 1.12.4-1
 - Update to 1.12.4
 
