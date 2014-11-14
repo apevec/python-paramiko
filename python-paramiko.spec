@@ -1,10 +1,9 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-
+%global with_python3 1
 %global srcname paramiko
 
 Name:           python-paramiko
 Version:        1.15.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -18,18 +17,37 @@ BuildArch:      noarch
 BuildRequires: python-setuptools
 BuildRequires: python-crypto >= 2.1
 BuildRequires: python-ecdsa
+BuildRequires: python-devel
 Requires:      python-crypto >= 2.1
 Requires:      python-ecdsa
 
+%global paramiko_desc \
+Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
+a module for python 2.3 or greater that implements the SSH2 protocol for secure\
+(encrypted and authenticated) connections to remote machines. Unlike SSL (aka\
+TLS), the SSH2 protocol does not require heirarchical certificates signed by a\
+powerful central authority. You may know SSH2 as the protocol that replaced\
+telnet and rsh for secure access to remote shells, but the protocol also\
+includes the ability to open arbitrary channels to remote services across an\
+encrypted tunnel. (This is how sftp works, for example.)\
+
 %description
-Paramiko (a combination of the esperanto words for "paranoid" and "friend") is
-a module for python 2.3 or greater that implements the SSH2 protocol for secure
-(encrypted and authenticated) connections to remote machines. Unlike SSL (aka
-TLS), the SSH2 protocol does not require heirarchical certificates signed by a
-powerful central authority. You may know SSH2 as the protocol that replaced
-telnet and rsh for secure access to remote shells, but the protocol also
-includes the ability to open arbitrary channels to remote services across an
-encrypted tunnel. (This is how sftp works, for example.)
+%{paramiko_desc}
+
+%if 0%{?with_python3}
+%package -n python3-%{srcname}
+Summary:        SSH2 protocol library for python
+BuildRequires: python3-setuptools
+BuildRequires: python3-crypto >= 2.1
+BuildRequires: python3-ecdsa
+BuildRequires: python3-devel
+Requires:      python3-crypto >= 2.1
+Requires:      python3-ecdsa
+%description -n python3-%{srcname}
+%{paramiko_desc}
+
+This is the python3 build.
+%endif
 
 %prep
 %setup -q -n %{srcname}-%{version}
@@ -38,19 +56,39 @@ encrypted tunnel. (This is how sftp works, for example.)
 %{__sed} -i -e '/^#!/,1d' demos/*
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
+
+%if 0%{?with_python3}
+    %{__python3} setup.py build
+%endif
 
 %install
-%{__python} setup.py install --skip-build --root %{buildroot}
+%{__python2} setup.py install --skip-build --root %{buildroot}
+%if 0%{?with_python3}
+    %{__python3} setup.py install --skip-build --root %{buildroot}
+%endif
 
 %check
-%{__python} ./test.py --no-sftp --no-big-file
+%{__python2} ./test.py --no-sftp --no-big-file
+%if 0%{?with_python3}
+    %{__python3} ./test.py --no-sftp --no-big-file
+%endif
 
 %files
 %doc LICENSE PKG-INFO README docs/ demos/
-%{python_sitelib}/*
+%{python2_sitelib}/*
+
+%if 0%{?with_python3}
+%files -n python3-%{srcname}
+%doc LICENSE PKG-INFO README docs/ demos/
+%{python3_sitelib}/*
+%endif
 
 %changelog
+* Fri Nov 14 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.1-2
+- Add support for python3
+- Add BR -devel for python macros.
+
 * Fri Oct 17 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.15.1-1
 - Update to 1.15.1
 
