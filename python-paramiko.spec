@@ -3,7 +3,7 @@
 
 Name:           python-paramiko
 Version:        1.15.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -54,13 +54,15 @@ This is the python3 build.
 
 %{__chmod} a-x demos/*
 %{__sed} -i -e '/^#!/,1d' demos/*
+%if 0%{?with_python3}
+    rm -rf %{py3dir}
+    cp -a . %{py3dir}
+%endif
 
 %build
 %{__python2} setup.py build
 
 %if 0%{?with_python3}
-    rm -rf %{py3dir}
-    cp -a . %{py3dir}
     pushd %{py3dir}
     %{__python3} setup.py build
     popd
@@ -93,6 +95,9 @@ This is the python3 build.
 %endif
 
 %changelog
+* Sat Nov 15 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.1-4
+- py3dir creation should be in prep section
+
 * Fri Nov 14 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.1-3
 - Build each pkg in a clean dir
 
