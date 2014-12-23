@@ -5,8 +5,8 @@
 %global srcname paramiko
 
 Name:           python-paramiko
-Version:        1.15.1
-Release:        5%{?dist}
+Version:        1.15.2
+Release:        1%{?dist}
 Summary:        SSH2 protocol library for python
 
 Group:          Development/Libraries
@@ -98,6 +98,9 @@ This is the python3 build.
 %endif
 
 %changelog
+* Tue Dec 23 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.2-1
+- Update to 1.15.2
+
 * Mon Nov 24 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.1-5
 - Add conditional to exclude EL since does not have py3
 
