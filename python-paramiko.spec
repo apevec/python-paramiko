@@ -1,21 +1,17 @@
-%if 0%{?fedora} > 15
-    %global with_python3 1
-%endif
-
 %global srcname paramiko
 
-Name:           python-paramiko
-Version:        1.15.2
-Release:        1%{?dist}
-Summary:        SSH2 protocol library for python
+Name:          python-paramiko
+Version:       1.15.2
+Release:       2%{?dist}
+Summary:       SSH2 protocol library for python
 
-Group:          Development/Libraries
+Group:         Development/Libraries
 # No version specified.
-License:        LGPLv2+
-URL:            https://github.com/paramiko/paramiko/
-Source0:        http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
+License:       LGPLv2+
+URL:           https://github.com/paramiko/paramiko/
+Source0:       http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
 
-BuildArch:      noarch
+BuildArch:     noarch
 
 BuildRequires: python-setuptools
 BuildRequires: python-crypto >= 2.1
@@ -37,67 +33,81 @@ encrypted tunnel. (This is how sftp works, for example.)\
 %description
 %{paramiko_desc}
 
-%if 0%{?with_python3}
 %package -n python3-%{srcname}
-Summary:        SSH2 protocol library for python
+Summary:       SSH2 protocol library for python
 BuildRequires: python3-setuptools
 BuildRequires: python3-crypto >= 2.1
 BuildRequires: python3-ecdsa
 BuildRequires: python3-devel
 Requires:      python3-crypto >= 2.1
 Requires:      python3-ecdsa
+
 %description -n python3-%{srcname}
 %{paramiko_desc}
 
 This is the python3 build.
-%endif
+
+%package doc
+Summary:       Docs and demo for SSH2 protocol library for python
+Requires:      %{name} = %{version}-%{release}
+
+%description doc
+%{paramiko_desc}
+
+This is the documentation and demos.
+
 
 %prep
 %setup -q -n %{srcname}-%{version}
 
-%{__chmod} a-x demos/*
-%{__sed} -i -e '/^#!/,1d' demos/*
-%if 0%{?with_python3}
-    rm -rf %{py3dir}
-    cp -a . %{py3dir}
-%endif
+chmod a-x demos/*
+sed -i -e '/^#!/,1d' demos/*
+rm -rf %{py3dir}
+cp -a . %{py3dir}
 
 %build
 %{__python2} setup.py build
 
-%if 0%{?with_python3}
-    pushd %{py3dir}
-    %{__python3} setup.py build
-    popd
-%endif
+pushd %{py3dir}
+  %{__python3} setup.py build
+popd
 
 %install
 %{__python2} setup.py install --skip-build --root %{buildroot}
-%if 0%{?with_python3}
-    pushd %{py3dir}
-    %{__python3} setup.py install --skip-build --root %{buildroot}
-    popd
-%endif
+
+pushd %{py3dir}
+  %{__python3} setup.py install --skip-build --root %{buildroot}
+popd
 
 %check
 %{__python2} ./test.py --no-sftp --no-big-file
-%if 0%{?with_python3}
-    pushd %{py3dir}
-    %{__python3} ./test.py --no-sftp --no-big-file
-    popd
-%endif
+
+pushd %{py3dir}
+  %{__python3} ./test.py --no-sftp --no-big-file
+popd
 
 %files
-%doc LICENSE PKG-INFO README docs/ demos/
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
+%doc PKG-INFO README
 %{python2_sitelib}/*
 
-%if 0%{?with_python3}
 %files -n python3-%{srcname}
-%doc LICENSE PKG-INFO README docs/ demos/
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
+%doc PKG-INFO README
 %{python3_sitelib}/*
-%endif
+
+%files doc
+%doc docs/ demos/
+
 
 %changelog
+* Sun Mar 22 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.15.2-2
+- Use %%license
+- Move duplicated docs to single doc sub package
+- Remove old F-15 conditionals
+
 * Tue Dec 23 2014 Athmane Madjoudj <athmane@fedoraproject.org> 1.15.2-1
 - Update to 1.15.2
 
