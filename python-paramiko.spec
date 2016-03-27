@@ -1,8 +1,9 @@
+%{!?_licensedir:%global license %%doc}
 %global srcname paramiko
 
-Name:          python-paramiko
-Version:       1.15.2
-Release:       5%{?dist}
+Name:          python-%{srcname}
+Version:       1.16.0
+Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
 Group:         Development/Libraries
@@ -12,13 +13,6 @@ URL:           https://github.com/paramiko/paramiko/
 Source0:       http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
 
 BuildArch:     noarch
-
-BuildRequires: python-setuptools
-BuildRequires: python-crypto >= 2.1
-BuildRequires: python-ecdsa
-BuildRequires: python-devel
-Requires:      python-crypto >= 2.1
-Requires:      python-ecdsa
 
 %global paramiko_desc \
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
@@ -33,8 +27,24 @@ encrypted tunnel. (This is how sftp works, for example.)\
 %description
 %{paramiko_desc}
 
+%package -n python2-%{srcname}
+Summary:       SSH2 protocol library for python
+%{?python_provide:%python_provide python2-%{srcname}}
+BuildRequires: python2-setuptools
+BuildRequires: python2-crypto >= 2.1
+BuildRequires: python2-ecdsa
+BuildRequires: python2-devel
+Requires:      python2-crypto >= 2.1
+Requires:      python2-ecdsa
+
+%description -n python2-%{srcname}
+%{paramiko_desc}
+
+Python 2 version.
+
 %package -n python3-%{srcname}
 Summary:       SSH2 protocol library for python
+%{?python_provide:%python_provide python3-%{srcname}}
 BuildRequires: python3-setuptools
 BuildRequires: python3-crypto >= 2.1
 BuildRequires: python3-ecdsa
@@ -45,7 +55,7 @@ Requires:      python3-ecdsa
 %description -n python3-%{srcname}
 %{paramiko_desc}
 
-This is the python3 build.
+Python 3 version.
 
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
@@ -56,53 +66,44 @@ Requires:      %{name} = %{version}-%{release}
 
 This is the documentation and demos.
 
-
 %prep
-%setup -q -n %{srcname}-%{version}
+%autosetup -n %{srcname}-%{version}
 
 chmod a-x demos/*
 sed -i -e '/^#!/,1d' demos/*
-rm -rf %{py3dir}
-cp -a . %{py3dir}
 
 %build
-%{__python2} setup.py build
-
-pushd %{py3dir}
-  %{__python3} setup.py build
-popd
+%py2_build
+%py3_build
 
 %install
-%{__python2} setup.py install --skip-build --root %{buildroot}
-
-pushd %{py3dir}
-  %{__python3} setup.py install --skip-build --root %{buildroot}
-popd
+%py2_install
+%py3_install
 
 %check
 %{__python2} ./test.py --no-sftp --no-big-file
+%{__python3} ./test.py --no-sftp --no-big-file
 
-pushd %{py3dir}
-  %{__python3} ./test.py --no-sftp --no-big-file
-popd
-
-%files
-%{!?_licensedir:%global license %%doc}
+%files -n python2-%{srcname}
 %license LICENSE
 %doc PKG-INFO README
-%{python2_sitelib}/*
+%{python2_sitelib}/%{srcname}-*.egg-info/
+%{python2_sitelib}/%{srcname}/
 
 %files -n python3-%{srcname}
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %doc PKG-INFO README
-%{python3_sitelib}/*
+%{python3_sitelib}/%{srcname}-*.egg-info/
+%{python3_sitelib}/%{srcname}/
 
 %files doc
 %doc docs/ demos/
 
-
 %changelog
+* Sun Mar 27 2016 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.16.0-1
+- Update to 1.16.0
+- Adopt to new packaging guidelines
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.15.2-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
