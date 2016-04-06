@@ -42,17 +42,17 @@ Requires:      python2-ecdsa
 
 Python 2 version.
 
-%package -n python3-%{srcname}
+%package -n python%{python3_pkgversion}-%{srcname}
 Summary:       SSH2 protocol library for python
-%{?python_provide:%python_provide python3-%{srcname}}
-BuildRequires: python3-setuptools
-BuildRequires: python3-crypto >= 2.1
-BuildRequires: python3-ecdsa
-BuildRequires: python3-devel
-Requires:      python3-crypto >= 2.1
-Requires:      python3-ecdsa
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
+BuildRequires: python%{python3_pkgversion}-setuptools
+BuildRequires: python%{python3_pkgversion}-crypto >= 2.1
+BuildRequires: python%{python3_pkgversion}-ecdsa
+BuildRequires: python%{python3_pkgversion}-devel
+Requires:      python%{python3_pkgversion}-crypto >= 2.1
+Requires:      python%{python3_pkgversion}-ecdsa
 
-%description -n python3-%{srcname}
+%description -n python%{python3_pkgversion}-%{srcname}
 %{paramiko_desc}
 
 Python 3 version.
@@ -90,7 +90,7 @@ sed -i -e '/^#!/,1d' demos/*
 %{python2_sitelib}/%{srcname}-*.egg-info/
 %{python2_sitelib}/%{srcname}/
 
-%files -n python3-%{srcname}
+%files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc PKG-INFO README
 %{python3_sitelib}/%{srcname}-*.egg-info/
