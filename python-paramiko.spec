@@ -1,4 +1,3 @@
-%{!?_licensedir:%global license %%doc}
 %global srcname paramiko
 
 Name:          python-%{srcname}
