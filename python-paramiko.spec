@@ -1,15 +1,20 @@
 %global srcname paramiko
 
+%if 0%{?rhel} && 0%{?rhel} <= 7
+%bcond_with weak_deps
+%else
+%bcond_without weak_deps
+%endif
+
 Name:          python-%{srcname}
-Version:       1.16.0
+Version:       2.0.0
 Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
-Group:         Development/Libraries
 # No version specified.
 License:       LGPLv2+
-URL:           https://github.com/paramiko/paramiko/
-Source0:       http://pypi.python.org/packages/source/p/paramiko/paramiko-%{version}.tar.gz
+URL:           https://github.com/paramiko/paramiko
+Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch:     noarch
 
@@ -29,12 +34,13 @@ encrypted tunnel. (This is how sftp works, for example.)\
 %package -n python2-%{srcname}
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python2-%{srcname}}
-BuildRequires: python2-setuptools
-BuildRequires: python2-crypto >= 2.1
-BuildRequires: python2-ecdsa
 BuildRequires: python2-devel
-Requires:      python2-crypto >= 2.1
-Requires:      python2-ecdsa
+BuildRequires: python2-setuptools
+BuildRequires: python2-cryptography
+Requires:      python2-cryptography
+%if %{with weak_deps}
+Recommends:    python-gssapi
+%endif
 
 %description -n python2-%{srcname}
 %{paramiko_desc}
@@ -44,12 +50,13 @@ Python 2 version.
 %package -n python%{python3_pkgversion}-%{srcname}
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
-BuildRequires: python%{python3_pkgversion}-setuptools
-BuildRequires: python%{python3_pkgversion}-crypto >= 2.1
-BuildRequires: python%{python3_pkgversion}-ecdsa
 BuildRequires: python%{python3_pkgversion}-devel
-Requires:      python%{python3_pkgversion}-crypto >= 2.1
-Requires:      python%{python3_pkgversion}-ecdsa
+BuildRequires: python%{python3_pkgversion}-setuptools
+BuildRequires: python%{python3_pkgversion}-cryptography
+Requires:      python%{python3_pkgversion}-cryptography
+%if %{with weak_deps}
+Recommends:    python%{python3_pkgversion}-gssapi
+%endif
 
 %description -n python%{python3_pkgversion}-%{srcname}
 %{paramiko_desc}
@@ -58,6 +65,7 @@ Python 3 version.
 
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
+BuildRequires: /usr/bin/sphinx-build
 Requires:      %{name} = %{version}-%{release}
 
 %description doc
@@ -79,26 +87,32 @@ sed -i -e '/^#!/,1d' demos/*
 %py2_install
 %py3_install
 
+sphinx-build -b html sites/docs/ html/
+rm -f html/.buildinfo
+
 %check
 %{__python2} ./test.py --no-sftp --no-big-file
 %{__python3} ./test.py --no-sftp --no-big-file
 
 %files -n python2-%{srcname}
 %license LICENSE
-%doc PKG-INFO README
+%doc NEWS README.rst
 %{python2_sitelib}/%{srcname}-*.egg-info/
 %{python2_sitelib}/%{srcname}/
 
 %files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
-%doc PKG-INFO README
+%doc NEWS README.rst
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
 
 %files doc
-%doc docs/ demos/
+%doc html/ demos/
 
 %changelog
+* Fri Apr 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.0.0-1
+- Update to 2.0.0 (RHBZ #1331737)
+
 * Sun Mar 27 2016 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.16.0-1
 - Update to 1.16.0
 - Adopt to new packaging guidelines
