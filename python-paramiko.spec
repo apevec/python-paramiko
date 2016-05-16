@@ -37,7 +37,7 @@ encrypted tunnel. (This is how sftp works, for example.)\
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python2-%{srcname}}
 BuildRequires: python2-devel
-BuildRequires: python2-setuptools
+BuildRequires: python-setuptools
 BuildRequires: python2-cryptography
 Requires:      python2-cryptography
 %if %{with weak_deps}
