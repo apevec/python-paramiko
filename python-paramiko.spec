@@ -2,8 +2,10 @@
 
 %if 0%{?rhel} && 0%{?rhel} <= 7
 %bcond_with weak_deps
+%bcond_with python3
 %else
 %bcond_without weak_deps
+%bcond_without python3
 %endif
 
 Name:          python-%{srcname}
@@ -47,6 +49,7 @@ Recommends:    python-gssapi
 
 Python 2 version.
 
+%if %{with python3}
 %package -n python%{python3_pkgversion}-%{srcname}
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
@@ -62,6 +65,7 @@ Recommends:    python%{python3_pkgversion}-gssapi
 %{paramiko_desc}
 
 Python 3 version.
+%endif
 
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
@@ -81,18 +85,24 @@ sed -i -e '/^#!/,1d' demos/*
 
 %build
 %py2_build
+%if %{with python3}
 %py3_build
+%endif
 
 %install
 %py2_install
+%if %{with python3}
 %py3_install
+%endif
 
 sphinx-build -b html sites/docs/ html/
 rm -f html/.buildinfo
 
 %check
 %{__python2} ./test.py --no-sftp --no-big-file
+%if %{with python3}
 %{__python3} ./test.py --no-sftp --no-big-file
+%endif
 
 %files -n python2-%{srcname}
 %license LICENSE
@@ -100,11 +110,13 @@ rm -f html/.buildinfo
 %{python2_sitelib}/%{srcname}-*.egg-info/
 %{python2_sitelib}/%{srcname}/
 
+%if %{with python3}
 %files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc NEWS README.rst
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
+%endif
 
 %files doc
 %doc html/ demos/
