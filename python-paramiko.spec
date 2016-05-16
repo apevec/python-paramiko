@@ -70,6 +70,7 @@ Python 3 version.
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
 BuildRequires: /usr/bin/sphinx-build
+BuildRequires: python-sphinx-theme-alabaster
 Requires:      %{name} = %{version}-%{release}
 
 %description doc
