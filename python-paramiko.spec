@@ -8,7 +8,7 @@
 
 Name:          python-%{srcname}
 Version:       2.0.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -110,6 +110,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.0-2
+- https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
+
 * Fri Apr 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.0.0-1
 - Update to 2.0.0 (RHBZ #1331737)
 
