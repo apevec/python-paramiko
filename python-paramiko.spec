@@ -8,7 +8,7 @@
 
 Name:          python-%{srcname}
 Version:       2.1.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -110,6 +110,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 2.1.1-2
+- Rebuild for Python 3.6
+
 * Fri Dec 16 2016 Jon Ciesla <limburgher@gmail.com> - 2.1.1-1
 - 2.1.1.
 
