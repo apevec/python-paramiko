@@ -8,7 +8,7 @@
 
 Name:          python-%{srcname}
 Version:       2.1.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -110,6 +110,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 2.1.1-2
 - Rebuild for Python 3.6
 
