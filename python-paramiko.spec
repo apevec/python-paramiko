@@ -7,7 +7,7 @@
 %endif
 
 Name:          python-%{srcname}
-Version:       2.1.2
+Version:       2.2.0
 Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
@@ -19,10 +19,10 @@ Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 BuildArch:     noarch
 
 %global paramiko_desc \
-Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
+Paramiko (a combination of the Esperanto words for "paranoid" and "friend") is\
 a module for python 2.3 or greater that implements the SSH2 protocol for secure\
 (encrypted and authenticated) connections to remote machines. Unlike SSL (aka\
-TLS), the SSH2 protocol does not require heirarchical certificates signed by a\
+TLS), the SSH2 protocol does not require hierarchical certificates signed by a\
 powerful central authority. You may know SSH2 as the protocol that replaced\
 telnet and rsh for secure access to remote shells, but the protocol also\
 includes the ability to open arbitrary channels to remote services across an\
@@ -36,8 +36,14 @@ Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python2-%{srcname}}
 BuildRequires: python2-devel
 BuildRequires: python2-setuptools
-BuildRequires: python2-cryptography
-Requires:      python2-cryptography
+BuildRequires: python2-bcrypt >= 3.1.3
+BuildRequires: python2-cryptography >= 1.1
+BuildRequires: python2-pyasn1 >= 0.1.7
+BuildRequires: python2-pynacl >= 1.0.1
+Requires:      python2-bcrypt >= 3.1.3
+Requires:      python2-cryptography >= 1.1
+Requires:      python2-pyasn1 >= 0.1.7
+Requires:      python2-pynacl >= 1.0.1
 %if %{with weak_deps}
 Recommends:    python-gssapi
 %endif
@@ -52,8 +58,14 @@ Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-setuptools
-BuildRequires: python%{python3_pkgversion}-cryptography
-Requires:      python%{python3_pkgversion}-cryptography
+BuildRequires: python%{python3_pkgversion}-bcrypt >= 3.1.3
+BuildRequires: python%{python3_pkgversion}-cryptography >= 1.1
+BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
+BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
+Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
+Requires:      python%{python3_pkgversion}-cryptography >= 1.1
+Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
+Requires:      python%{python3_pkgversion}-pynacl >= 1.0.1
 %if %{with weak_deps}
 Recommends:    python%{python3_pkgversion}-gssapi
 %endif
@@ -110,6 +122,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Sun Jun 11 2017 Paul Howarth <paul@city-fan.org> - 2.2.0-1
+- 2.2.0.
+
 * Wed Feb 22 2017 Paul Howarth <paul@city-fan.org> - 2.1.2-1
 - 2.1.2.
 
