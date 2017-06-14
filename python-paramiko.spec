@@ -7,7 +7,7 @@
 %endif
 
 Name:          python-%{srcname}
-Version:       2.2.0
+Version:       2.2.1
 Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
@@ -122,6 +122,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Wed Jun 14 2017 Paul Howarth <paul@city-fan.org> - 2.2.1-1
+- 2.2.1.
+
 * Sun Jun 11 2017 Paul Howarth <paul@city-fan.org> - 2.2.0-1
 - 2.2.0.
 
