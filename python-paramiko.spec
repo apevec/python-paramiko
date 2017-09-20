@@ -7,8 +7,8 @@
 %endif
 
 Name:          python-%{srcname}
-Version:       2.2.1
-Release:       2%{?dist}
+Version:       2.3.0
+Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -26,7 +26,7 @@ TLS), the SSH2 protocol does not require hierarchical certificates signed by a\
 powerful central authority. You may know SSH2 as the protocol that replaced\
 telnet and rsh for secure access to remote shells, but the protocol also\
 includes the ability to open arbitrary channels to remote services across an\
-encrypted tunnel. (This is how sftp works, for example.)\
+encrypted tunnel (this is how sftp works, for example).
 
 %description
 %{paramiko_desc}
@@ -37,11 +37,11 @@ Summary:       SSH2 protocol library for python
 BuildRequires: python2-devel
 BuildRequires: python2-setuptools
 BuildRequires: python2-bcrypt >= 3.1.3
-BuildRequires: python2-cryptography >= 1.1
+BuildRequires: python2-cryptography >= 1.5
 BuildRequires: python2-pyasn1 >= 0.1.7
 BuildRequires: python2-pynacl >= 1.0.1
 Requires:      python2-bcrypt >= 3.1.3
-Requires:      python2-cryptography >= 1.1
+Requires:      python2-cryptography >= 1.5
 Requires:      python2-pyasn1 >= 0.1.7
 Requires:      python2-pynacl >= 1.0.1
 %if %{with weak_deps}
@@ -59,11 +59,11 @@ Summary:       SSH2 protocol library for python
 BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-setuptools
 BuildRequires: python%{python3_pkgversion}-bcrypt >= 3.1.3
-BuildRequires: python%{python3_pkgversion}-cryptography >= 1.1
+BuildRequires: python%{python3_pkgversion}-cryptography >= 1.5
 BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
 BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
 Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
-Requires:      python%{python3_pkgversion}-cryptography >= 1.1
+Requires:      python%{python3_pkgversion}-cryptography >= 1.5
 Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
 Requires:      python%{python3_pkgversion}-pynacl >= 1.0.1
 %if %{with weak_deps}
@@ -122,6 +122,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Wed Sep 20 2017 Paul Howarth <paul@city-fan.org> - 2.3.0-1
+- 2.3.0.
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
