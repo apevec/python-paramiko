@@ -7,7 +7,7 @@
 %endif
 
 Name:          python-%{srcname}
-Version:       2.3.0
+Version:       2.3.1
 Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
@@ -122,6 +122,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Sat Sep 23 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-1
+- Update to 2.3.1 (rhbz #1494764)
+
 * Wed Sep 20 2017 Paul Howarth <paul@city-fan.org> - 2.3.0-1
 - 2.3.0.
 
