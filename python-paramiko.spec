@@ -1,14 +1,8 @@
 %global srcname paramiko
 
-%if 0%{?rhel} && 0%{?rhel} <= 7
-%bcond_with weak_deps
-%else
-%bcond_without weak_deps
-%endif
-
 Name:          python-%{srcname}
 Version:       2.3.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -44,9 +38,6 @@ Requires:      python2-bcrypt >= 3.1.3
 Requires:      python2-cryptography >= 1.5
 Requires:      python2-pyasn1 >= 0.1.7
 Requires:      python2-pynacl >= 1.0.1
-%if %{with weak_deps}
-Recommends:    python-gssapi
-%endif
 
 %description -n python2-%{srcname}
 %{paramiko_desc}
@@ -66,9 +57,6 @@ Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
 Requires:      python%{python3_pkgversion}-cryptography >= 1.5
 Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
 Requires:      python%{python3_pkgversion}-pynacl >= 1.0.1
-%if %{with weak_deps}
-Recommends:    python%{python3_pkgversion}-gssapi
-%endif
 
 %description -n python%{python3_pkgversion}-%{srcname}
 %{paramiko_desc}
@@ -122,6 +110,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Tue Sep 26 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-2
+- Remove weak deps, paramiko does not support recent gssapi (rhbz #1496148)
+
 * Sat Sep 23 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-1
 - Update to 2.3.1 (rhbz #1494764)
 
