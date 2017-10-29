@@ -2,13 +2,14 @@
 
 Name:          python-%{srcname}
 Version:       2.3.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
 License:       LGPLv2+
 URL:           https://github.com/paramiko/paramiko
 Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
+Patch0:        paramiko-2.3.1-disable-gssapi-on-unsupported-version.patch
 
 BuildArch:     noarch
 
@@ -74,7 +75,7 @@ Requires:      %{name} = %{version}-%{release}
 This is the documentation and demos.
 
 %prep
-%autosetup -n %{srcname}-%{version}
+%autosetup -p1 -n %{srcname}-%{version}
 
 chmod a-x demos/*
 sed -i -e '/^#!/,1d' demos/*
@@ -110,6 +111,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Sun Oct 29 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-3
+- Add a patch to disable gssapi on unsupported version (rhbz #1507174)
+
 * Tue Sep 26 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-2
 - Remove weak deps, paramiko does not support recent gssapi (rhbz #1496148)
 
