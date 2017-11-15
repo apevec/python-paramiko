@@ -1,8 +1,8 @@
 %global srcname paramiko
 
 Name:          python-%{srcname}
-Version:       2.3.1
-Release:       3%{?dist}
+Version:       2.4.0
+Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -111,6 +111,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Wed Nov 15 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-1
+- Update to 2.4.0 (rhbz #1513208)
+
 * Sun Oct 29 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-3
 - Add a patch to disable gssapi on unsupported version (rhbz #1507174)
 
