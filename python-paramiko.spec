@@ -35,6 +35,7 @@ BuildRequires: python2-bcrypt >= 3.1.3
 BuildRequires: python2-cryptography >= 1.5
 BuildRequires: python2-pyasn1 >= 0.1.7
 BuildRequires: python2-pynacl >= 1.0.1
+BuildRequires: python2-pytest
 Requires:      python2-bcrypt >= 3.1.3
 Requires:      python2-cryptography >= 1.5
 Requires:      python2-pyasn1 >= 0.1.7
@@ -54,6 +55,7 @@ BuildRequires: python%{python3_pkgversion}-bcrypt >= 3.1.3
 BuildRequires: python%{python3_pkgversion}-cryptography >= 1.5
 BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
 BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
+BuildRequires: python%{python3_pkgversion}-pytest
 Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
 Requires:      python%{python3_pkgversion}-cryptography >= 1.5
 Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
@@ -92,8 +94,9 @@ sphinx-build -b html sites/docs/ html/
 rm -f html/.buildinfo
 
 %check
-%{__python2} ./test.py --no-sftp --no-big-file
-%{__python3} ./test.py --no-sftp --no-big-file
+PYTHONPATH=%{buildroot}%{python2_sitelib} pytest-%{python2_version}
+PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
+
 
 %files -n python2-%{srcname}
 %license LICENSE
@@ -113,6 +116,7 @@ rm -f html/.buildinfo
 %changelog
 * Wed Nov 15 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-1
 - Update to 2.4.0 (rhbz #1513208)
+- Revamp check section
 
 * Sun Oct 29 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.3.1-3
 - Add a patch to disable gssapi on unsupported version (rhbz #1507174)
