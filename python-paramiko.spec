@@ -9,7 +9,6 @@ Summary:       SSH2 protocol library for python
 License:       LGPLv2+
 URL:           https://github.com/paramiko/paramiko
 Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
-Patch0:        paramiko-2.3.1-disable-gssapi-on-unsupported-version.patch
 
 BuildArch:     noarch
 
@@ -116,6 +115,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Fri Nov 17 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.4.0-1
+- Update to 2.4.0
+
 * Wed Nov 15 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-1
 - Update to 2.4.0 (rhbz #1513208)
 - Revamp check section
