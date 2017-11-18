@@ -36,6 +36,7 @@ BuildRequires: python2-cryptography >= 1.5
 BuildRequires: python2-pyasn1 >= 0.1.7
 BuildRequires: python2-pynacl >= 1.0.1
 BuildRequires: python2-pytest
+BuildRequires: python2-pytest-relaxed
 Requires:      python2-bcrypt >= 3.1.3
 Requires:      python2-cryptography >= 1.5
 Requires:      python2-pyasn1 >= 0.1.7
@@ -56,6 +57,7 @@ BuildRequires: python%{python3_pkgversion}-cryptography >= 1.5
 BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
 BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
 BuildRequires: python%{python3_pkgversion}-pytest
+BuildRequires: python%{python3_pkgversion}-pytest-relaxed
 Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
 Requires:      python%{python3_pkgversion}-cryptography >= 1.5
 Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
@@ -118,6 +120,7 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %changelog
 * Sat Nov 18 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-2
 - Add gssapi patch back since 2.4.0 still not compatible
+- Add missing BR (lost durring merge)
 
 * Fri Nov 17 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.4.0-1
 - Update to 2.4.0
