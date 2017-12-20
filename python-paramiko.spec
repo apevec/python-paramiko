@@ -9,8 +9,9 @@
 %endif
 
 Name:          python-%{srcname}
-Version:       2.0.0
+Version:       1.18.4
 Release:       1%{?dist}
+Provides:       python2-paramiko = %{version}-%{release}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -19,6 +20,11 @@ URL:           https://github.com/paramiko/paramiko
 Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch:     noarch
+
+Requires:      python-cryptography
+BuildRequires: python2-devel
+BuildRequires: python-setuptools
+BuildRequires: python-cryptography
 
 %global paramiko_desc \
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
@@ -31,20 +37,6 @@ includes the ability to open arbitrary channels to remote services across an\
 encrypted tunnel. (This is how sftp works, for example.)\
 
 %description
-%{paramiko_desc}
-
-%package -n python2-%{srcname}
-Summary:       SSH2 protocol library for python
-%{?python_provide:%python_provide python2-%{srcname}}
-BuildRequires: python2-devel
-BuildRequires: python-setuptools
-BuildRequires: python2-cryptography
-Requires:      python2-cryptography
-%if %{with weak_deps}
-Recommends:    python-gssapi
-%endif
-
-%description -n python2-%{srcname}
 %{paramiko_desc}
 
 Python 2 version.
@@ -105,7 +97,7 @@ rm -f html/.buildinfo
 %{__python3} ./test.py --no-sftp --no-big-file
 %endif
 
-%files -n python2-%{srcname}
+%files -n python-%{srcname}
 %license LICENSE
 %doc NEWS README.rst
 %{python2_sitelib}/%{srcname}-*.egg-info/
@@ -123,6 +115,11 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Wed Dec 20 2017 Alan Pevec <apevec AT redhat.com> - 1.18.4-1
+- Downgrade to the last <2.0 release for nodepool:
+  https://github.com/openstack-infra/nodepool/commit/203ec1b52187d15b5f3f3454c4f2a0c601d205a2
+- drop python2-* to make it compatible with Extras build
+
 * Fri Apr 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.0.0-1
 - Update to 2.0.0 (RHBZ #1331737)
 
