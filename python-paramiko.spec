@@ -2,7 +2,7 @@
 
 Name:          python-%{srcname}
 Version:       2.4.0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -118,6 +118,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Sat Nov 18 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-2
 - Add gssapi patch back since 2.4.0 still not compatible
 - Add missing BR (lost durring merge)
