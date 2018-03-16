@@ -1,8 +1,8 @@
 %global srcname paramiko
 
 Name:          python-%{srcname}
-Version:       2.4.0
-Release:       3%{?dist}
+Version:       2.4.1
+Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -81,7 +81,7 @@ This is the documentation and demos.
 %prep
 %autosetup -p1 -n %{srcname}-%{version}
 
-chmod a-x demos/*
+chmod -c a-x demos/*
 sed -i -e '/^#!/,1d' demos/*
 
 %build
@@ -118,12 +118,21 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Fri Mar 16 2018 Paul Howarth <paul@city-fan.org> - 2.4.1-1
+- Update to 2.4.1
+  - Fix a security flaw (GH#1175, CVE-2018-7750) in Paramiko's server mode
+    (this does not impact client use) where authentication status was not
+    checked before processing channel-open and other requests typically only
+    sent after authenticating
+  - Ed25519 auth key decryption raised an unexpected exception when given a
+    unicode password string (typical in python 3) (GH#1039)
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
 * Sat Nov 18 2017 Athmane Madjoudj <athmane@fedoraproject.org> - 2.4.0-2
 - Add gssapi patch back since 2.4.0 still not compatible
-- Add missing BR (lost durring merge)
+- Add missing BR (lost during merge)
 
 * Fri Nov 17 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.4.0-1
 - Update to 2.4.0
