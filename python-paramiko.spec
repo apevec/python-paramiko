@@ -10,7 +10,7 @@
 
 Name:          python-%{srcname}
 Version:       2.1.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Provides:       python2-paramiko = %{version}-%{release}
 Summary:       SSH2 protocol library for python
 
@@ -22,9 +22,11 @@ Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 BuildArch:     noarch
 
 Requires:      python-cryptography
+Requires:      python-pyasn1
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
 BuildRequires: python-cryptography
+BuildRequires: python-pyasn1
 %global paramiko_desc \
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
 a module for python 2.3 or greater that implements the SSH2 protocol for secure\
@@ -116,6 +118,9 @@ rm -f html/.buildinfo
 %doc html/ demos/
 
 %changelog
+* Wed Mar 21 2018 Alfredo Moralejo <amoralej@redhat.com> - 2.1.1-3
+- Add python-pyasn1 as requirement.
+
 * Fri May 12 2017 Pavel Cahyna <pcahyna@redhat.com> - 2.1.1-2
 - Rebuild for RHEL 7.4 Extras
 
