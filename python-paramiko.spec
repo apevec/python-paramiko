@@ -2,13 +2,16 @@
 
 %if 0%{?rhel} && 0%{?rhel} <= 7
 %bcond_with weak_deps
+%bcond_with python3
 %else
 %bcond_without weak_deps
+%bcond_without python3
 %endif
 
 Name:          python-%{srcname}
-Version:       2.0.0
-Release:       1%{?dist}
+Version:       2.1.1
+Release:       2%{?dist}
+Provides:       python2-paramiko = %{version}-%{release}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -18,6 +21,10 @@ Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch:     noarch
 
+Requires:      python-cryptography
+BuildRequires: python2-devel
+BuildRequires: python-setuptools
+BuildRequires: python-cryptography
 %global paramiko_desc \
 Paramiko (a combination of the esperanto words for "paranoid" and "friend") is\
 a module for python 2.3 or greater that implements the SSH2 protocol for secure\
@@ -31,22 +38,11 @@ encrypted tunnel. (This is how sftp works, for example.)\
 %description
 %{paramiko_desc}
 
-%package -n python2-%{srcname}
-Summary:       SSH2 protocol library for python
-%{?python_provide:%python_provide python2-%{srcname}}
-BuildRequires: python2-devel
-BuildRequires: python2-setuptools
-BuildRequires: python2-cryptography
-Requires:      python2-cryptography
 %if %{with weak_deps}
 Recommends:    python-gssapi
 %endif
 
-%description -n python2-%{srcname}
-%{paramiko_desc}
-
-Python 2 version.
-
+%if %{with python3}
 %package -n python%{python3_pkgversion}-%{srcname}
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
@@ -62,10 +58,12 @@ Recommends:    python%{python3_pkgversion}-gssapi
 %{paramiko_desc}
 
 Python 3 version.
+%endif
 
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
 BuildRequires: /usr/bin/sphinx-build
+BuildRequires: python-sphinx-theme-alabaster
 Requires:      %{name} = %{version}-%{release}
 
 %description doc
@@ -80,36 +78,53 @@ chmod a-x demos/*
 sed -i -e '/^#!/,1d' demos/*
 
 %build
-%py2_build
+CFLAGS="%{optflags}" %{__python} setup.py %{?py_setup_args} build --executable="%{__python2} -s"
+%if %{with python3}
 %py3_build
+%endif
 
 %install
-%py2_install
+CFLAGS="%{optflags}" %{__python} setup.py %{?py_setup_args} install -O1 --skip-build --root %{buildroot}
+%if %{with python3}
 %py3_install
+%endif
 
 sphinx-build -b html sites/docs/ html/
 rm -f html/.buildinfo
 
 %check
 %{__python2} ./test.py --no-sftp --no-big-file
+%if %{with python3}
 %{__python3} ./test.py --no-sftp --no-big-file
+%endif
 
-%files -n python2-%{srcname}
+%files -n python-%{srcname}
 %license LICENSE
 %doc NEWS README.rst
 %{python2_sitelib}/%{srcname}-*.egg-info/
 %{python2_sitelib}/%{srcname}/
 
+%if %{with python3}
 %files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc NEWS README.rst
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
+%endif
 
 %files doc
 %doc html/ demos/
 
 %changelog
+* Fri May 12 2017 Pavel Cahyna <pcahyna@redhat.com> - 2.1.1-2
+- Rebuild for RHEL 7.4 Extras
+
+* Thu Jan 05 2017 Troy Dawson <tdawson@redhat.com> 2.1.1-1
+- Update to 2.1.1
+
+* Fri Jul 08 2016 Jon Schlueter <jschluet@redhat.com> 2.0.0-1.0
+- Rebuild
+
 * Fri Apr 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.0.0-1
 - Update to 2.0.0 (RHBZ #1331737)
 
