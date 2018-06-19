@@ -2,7 +2,7 @@
 
 Name:          python-%{srcname}
 Version:       2.4.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -118,6 +118,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-2
+- Rebuilt for Python 3.7
+
 * Fri Mar 16 2018 Paul Howarth <paul@city-fan.org> - 2.4.1-1
 - Update to 2.4.1
   - Fix a security flaw (GH#1175, CVE-2018-7750) in Paramiko's server mode
