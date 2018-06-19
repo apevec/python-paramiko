@@ -2,7 +2,7 @@
 
 Name:          python-%{srcname}
 Version:       2.4.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -118,6 +118,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-3
+- Rebuilt for Python 3.7
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-2
 - Rebuilt for Python 3.7
 
