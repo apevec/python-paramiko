@@ -11,6 +11,10 @@ URL:           https://github.com/paramiko/paramiko
 Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 Patch0:        paramiko-2.3.1-disable-gssapi-on-unsupported-version.patch
 
+# pytest-relaxed needs pytest < 3.3, but we have 3.6
+# this patch removes the dependency on pytest-relaxed
+Patch1:        paramiko-2.4.1-drop-pytest-relaxed.patch
+
 BuildArch:     noarch
 
 %global paramiko_desc \
@@ -36,7 +40,6 @@ BuildRequires: python2-cryptography >= 1.5
 BuildRequires: python2-pyasn1 >= 0.1.7
 BuildRequires: python2-pynacl >= 1.0.1
 BuildRequires: python2-pytest
-BuildRequires: python2-pytest-relaxed
 Requires:      python2-bcrypt >= 3.1.3
 Requires:      python2-cryptography >= 1.5
 Requires:      python2-pyasn1 >= 0.1.7
@@ -57,7 +60,6 @@ BuildRequires: python%{python3_pkgversion}-cryptography >= 1.5
 BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
 BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
 BuildRequires: python%{python3_pkgversion}-pytest
-BuildRequires: python%{python3_pkgversion}-pytest-relaxed
 Requires:      python%{python3_pkgversion}-bcrypt >= 3.1.3
 Requires:      python%{python3_pkgversion}-cryptography >= 1.5
 Requires:      python%{python3_pkgversion}-pyasn1 >= 0.1.7
@@ -120,12 +122,7 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %changelog
 * Wed Jun 20 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-4
 - Rebuilt for Python 3.7
-
-* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-3
-- Rebuilt for Python 3.7
-
-* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-2
-- Rebuilt for Python 3.7
+- Remove dependency on on pytest-relaxed
 
 * Fri Mar 16 2018 Paul Howarth <paul@city-fan.org> - 2.4.1-1
 - Update to 2.4.1
