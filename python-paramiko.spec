@@ -2,7 +2,7 @@
 
 Name:          python-%{srcname}
 Version:       2.4.1
-Release:       4%{?dist}
+Release:       5%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -120,6 +120,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Jun 20 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.1-4
 - Rebuilt for Python 3.7
 - Remove dependency on on pytest-relaxed
