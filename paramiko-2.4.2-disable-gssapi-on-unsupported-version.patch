@@ -1,10 +1,10 @@
-diff -ru paramiko-2.3.1.orig/paramiko/ssh_gss.py paramiko-2.3.1/paramiko/ssh_gss.py
---- paramiko-2.3.1.orig/paramiko/ssh_gss.py	2017-09-22 21:15:16.000000000 +0100
-+++ paramiko-2.3.1/paramiko/ssh_gss.py	2017-10-29 21:16:08.071429184 +0100
-@@ -51,7 +51,12 @@
- 
+diff -up paramiko-2.4.2/paramiko/ssh_gss.py.orig paramiko-2.4.2/paramiko/ssh_gss.py
+--- paramiko-2.4.2/paramiko/ssh_gss.py.orig	2018-09-19 05:16:40.000000000 +0100
++++ paramiko-2.4.2/paramiko/ssh_gss.py	2018-10-09 09:15:46.083966972 +0100
+@@ -52,7 +52,12 @@ _API = "MIT"
  try:
      import gssapi
+ 
 -    GSS_EXCEPTIONS = (gssapi.GSSException,)
 +    try:
 +        GSS_EXCEPTIONS = (gssapi.GSSException,)

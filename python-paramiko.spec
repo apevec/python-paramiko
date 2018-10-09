@@ -1,19 +1,19 @@
 %global srcname paramiko
 
 Name:          python-%{srcname}
-Version:       2.4.1
-Release:       5%{?dist}
+Version:       2.4.2
+Release:       1%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
 License:       LGPLv2+
 URL:           https://github.com/paramiko/paramiko
 Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
-Patch0:        paramiko-2.3.1-disable-gssapi-on-unsupported-version.patch
+Patch0:        paramiko-2.4.2-disable-gssapi-on-unsupported-version.patch
 
 # pytest-relaxed needs pytest < 3.3, but we have 3.6
 # this patch removes the dependency on pytest-relaxed
-Patch1:        paramiko-2.4.1-drop-pytest-relaxed.patch
+Patch1:        paramiko-2.4.2-drop-pytest-relaxed.patch
 
 BuildArch:     noarch
 
@@ -37,6 +37,7 @@ BuildRequires: python2-devel
 BuildRequires: python2-setuptools
 BuildRequires: python2-bcrypt >= 3.1.3
 BuildRequires: python2-cryptography >= 1.5
+BuildRequires: python2-mock >= 2.0.0
 BuildRequires: python2-pyasn1 >= 0.1.7
 BuildRequires: python2-pynacl >= 1.0.1
 BuildRequires: python2-pytest
@@ -57,6 +58,7 @@ BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-setuptools
 BuildRequires: python%{python3_pkgversion}-bcrypt >= 3.1.3
 BuildRequires: python%{python3_pkgversion}-cryptography >= 1.5
+BuildRequires: python%{python3_pkgversion}-mock >= 2.0.0
 BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.1.7
 BuildRequires: python%{python3_pkgversion}-pynacl >= 1.0.1
 BuildRequires: python%{python3_pkgversion}-pytest
@@ -120,6 +122,20 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Tue Oct  9 2018 Paul Howarth <paul@city-fan.org> - 2.4.2-1
+- Update to 2.4.2
+  - Fix exploit (GH#1283, CVE-2018-1000805) in Paramiko’s server mode (not
+    client mode) where hostile clients could trick the server into thinking
+    they were authenticated without actually submitting valid authentication
+  - Modify protocol message handling such that Transport does not respond to
+    MSG_UNIMPLEMENTED with its own MSG_UNIMPLEMENTED; this behavior probably
+    didn’t cause any outright errors, but it doesn’t seem to conform to the
+    RFCs and could cause (non-infinite) feedback loops in some scenarios
+    (usually those involving Paramiko on both ends)
+  - Add *.pub files to the MANIFEST so distributed source packages contain
+    some necessary test assets (GH#1262)
+- Test suite now requires mock ≥ 2.0.0
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
