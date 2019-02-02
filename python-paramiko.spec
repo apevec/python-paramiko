@@ -2,7 +2,7 @@
 
 Name:          python-%{srcname}
 Version:       2.4.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       SSH2 protocol library for python
 
 # No version specified.
@@ -122,6 +122,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %doc html/ demos/
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Oct  9 2018 Paul Howarth <paul@city-fan.org> - 2.4.2-1
 - Update to 2.4.2
   - Fix exploit (GH#1283, CVE-2018-1000805) in Paramiko’s server mode (not
