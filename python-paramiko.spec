@@ -1,5 +1,9 @@
 %global srcname paramiko
 
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global with_python3 1
+%endif
+
 Name:          python-%{srcname}
 Version:       2.4.2
 Release:       2%{?dist}
@@ -51,6 +55,7 @@ Requires:      python2-pynacl >= 1.0.1
 
 Python 2 version.
 
+%if 0%{?with_python3}
 %package -n python%{python3_pkgversion}-%{srcname}
 Summary:       SSH2 protocol library for python
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
@@ -71,6 +76,7 @@ Requires:      python%{python3_pkgversion}-pynacl >= 1.0.1
 %{paramiko_desc}
 
 Python 3 version.
+%endif
 
 %package doc
 Summary:       Docs and demo for SSH2 protocol library for python
@@ -90,11 +96,15 @@ sed -i -e '/^#!/,1d' demos/*
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 %install
 %py2_install
+%if 0%{?with_python3}
 %py3_install
+%endif
 
 sphinx-build -b html sites/docs/ html/
 rm -f html/.buildinfo
@@ -103,7 +113,9 @@ rm -f html/.buildinfo
 # Remove sftp test (fail under mock)
 rm -f tests/test_sftp*.py
 PYTHONPATH=%{buildroot}%{python2_sitelib} pytest-%{python2_version}
+%if 0%{?with_python3}
 PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
+%endif
 
 
 %files -n python2-%{srcname}
@@ -112,11 +124,13 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version}
 %{python2_sitelib}/%{srcname}-*.egg-info/
 %{python2_sitelib}/%{srcname}/
 
+%if 0%{?with_python3}
 %files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc NEWS README.rst
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
+%endif
 
 %files doc
 %doc html/ demos/
